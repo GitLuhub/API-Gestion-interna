@@ -15,6 +15,11 @@ class UserRepository(BaseRepository[User, UserCreate, UserUpdate]):
         return result.scalars().first()
 
     async def get_with_roles(self, user_id: str) -> User | None:
-        query = select(self.model).options(selectinload(self.model.roles)).where(self.model.id == user_id, self.model.is_deleted == False)
+        import uuid
+        try:
+            uid = uuid.UUID(user_id) if isinstance(user_id, str) else user_id
+        except ValueError:
+            return None
+        query = select(self.model).options(selectinload(self.model.roles)).where(self.model.id == uid, self.model.is_deleted == False)
         result = await self.db_session.execute(query)
         return result.scalars().first()
