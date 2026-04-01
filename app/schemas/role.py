@@ -4,15 +4,15 @@ from datetime import datetime
 import uuid
 
 class RoleBase(BaseModel):
-    name: str
-    description: Optional[str] = None
+    name: str = Field(..., min_length=2, max_length=50, strip_whitespace=True)
+    description: Optional[str] = Field(None, max_length=255, strip_whitespace=True)
 
 class RoleCreate(RoleBase):
     pass
 
 class RoleUpdate(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
+    name: Optional[str] = Field(None, min_length=2, max_length=50, strip_whitespace=True)
+    description: Optional[str] = Field(None, max_length=255, strip_whitespace=True)
 
 class RolePublic(RoleBase):
     id: uuid.UUID
