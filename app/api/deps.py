@@ -84,3 +84,11 @@ def role_required(required_roles: list[str]):
             raise ForbiddenException(f"User does not have required roles: {', '.join(required_roles)}")
         return current_user
     return role_checker
+
+def admin_required():
+    async def admin_checker(request: Request, current_user: UserPublic = Depends(get_current_user)):
+        user_roles = getattr(request.state, "user_roles", [])
+        if "Admin" not in user_roles or not getattr(current_user, "is_superuser", False):
+            raise ForbiddenException("Access denied. Admin role and superuser privileges required.")
+        return current_user
+    return admin_checker

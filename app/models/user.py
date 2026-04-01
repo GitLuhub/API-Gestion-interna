@@ -1,13 +1,14 @@
 from sqlalchemy import String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
+import uuid
 from app.models.base import Base, UUIDMixin, TimestampMixin
 
 class UserRole(Base):
     __tablename__ = "user_roles"
     
-    user_id: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
-    role_id: Mapped[str] = mapped_column(ForeignKey("roles.id", ondelete="CASCADE"), primary_key=True)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    role_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("roles.id", ondelete="CASCADE"), primary_key=True)
     
 class Role(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "roles"
@@ -26,6 +27,7 @@ class User(Base, UUIDMixin, TimestampMixin):
     last_name: Mapped[str] = mapped_column(String(100), nullable=False)
     
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, server_default="true", nullable=False)
+    is_superuser: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false", nullable=False)
     
     # Soft delete support
     is_deleted: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false", nullable=False)
