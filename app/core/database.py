@@ -50,6 +50,10 @@ sessionmanager = DatabaseSessionManager(
     settings.DATABASE_URL, 
     {
         "echo": settings.ENVIRONMENT == "development",
+        "pool_size": 20,
+        "max_overflow": 10,
+        "pool_timeout": 30,
+        "pool_recycle": 1800,
         "connect_args": {
             "server_settings": {"statement_timeout": "5000"}
         }
