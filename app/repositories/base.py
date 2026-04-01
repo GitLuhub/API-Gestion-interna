@@ -22,6 +22,12 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         result = await self.db_session.execute(query)
         return list(result.scalars().all())
 
+    async def count(self) -> int:
+        from sqlalchemy import func
+        query = select(func.count()).select_from(self.model)
+        result = await self.db_session.execute(query)
+        return result.scalar_one()
+
     async def create(self, obj_in: CreateSchemaType | dict) -> ModelType:
         obj_in_data = obj_in if isinstance(obj_in, dict) else obj_in.model_dump()
         db_obj = self.model(**obj_in_data)

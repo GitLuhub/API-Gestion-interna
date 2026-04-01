@@ -39,9 +39,10 @@ class UserService:
             raise NotFoundException("Usuario no encontrado")
         return UserPublic.model_validate(user)
 
-    async def get_all_users(self, skip: int = 0, limit: int = 100) -> list[UserPublic]:
+    async def get_all_users(self, skip: int = 0, limit: int = 100) -> tuple[list[UserPublic], int]:
         users = await self.user_repo.get_all(skip=skip, limit=limit)
-        return [UserPublic.model_validate(user) for user in users if not user.is_deleted]
+        total = await self.user_repo.count()
+        return [UserPublic.model_validate(user) for user in users], total
 
     async def update_user(self, user_id: UUID, user_in: UserUpdate, actor_id: UUID | None = None) -> UserPublic:
         user = await self.user_repo.get_by_id(user_id)
