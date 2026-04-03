@@ -83,7 +83,3 @@ docker-compose exec web pytest
 ```
 
 ---
-
-## 📝 Documentación Adicional
-*   Revisa el archivo [ESTADO_PROYECTO.md](ESTADO_PROYECTO.md) para conocer el roadmap completo y las decisiones técnicas.
-*   Para detalles granulares de la capa de backend, revisa los manuales ubicados en el directorio `/docs`.

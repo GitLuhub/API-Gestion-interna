@@ -93,16 +93,3 @@ class RoleService:
         
         await self.role_repo.db_session.commit()
         return True
-user.roles = [r for r in user.roles if r.id != role_id]
-        self.role_repo.db_session.add(user)
-        
-        await self.audit_service.log_action(
-            action="UPDATE",
-            entity="UserRole",
-            entity_id=user.id,
-            user_id=actor_id,
-            details={"action": "revoke", "role_id": str(role.id), "role_name": role.name}
-        )
-        
-        await self.role_repo.db_session.commit()
-        return True
