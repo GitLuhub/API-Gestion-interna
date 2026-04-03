@@ -6,8 +6,8 @@ async def test_health_check_endpoint(client: AsyncClient):
     response = await client.get("/health")
     assert response.status_code == 200
     data = response.json()
-    assert data["status"] == "ok"
-    assert data["db_connection"] == "ok"
-    assert "environment" in data
-    assert "project" in data
-    assert data["environment"] == "testing"
+    assert data["message"] == "System Health Status"
+    assert data["data"]["database"] == "ok"
+    assert "environment" in data["data"]
+    assert "project" in data["data"]
+    assert data["data"]["environment"] == "testing"

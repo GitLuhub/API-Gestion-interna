@@ -10,7 +10,7 @@ from app.core.database import get_db_session
 from app.models.base import Base
 
 # Test database URL (PostgreSQL real para soportar UUID, JSON y asyncpg adecuadamente)
-TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5433/api_gestion_interna_test")
+TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "sqlite+aiosqlite:///:memory:")
 
 engine = create_async_engine(
     TEST_DATABASE_URL,

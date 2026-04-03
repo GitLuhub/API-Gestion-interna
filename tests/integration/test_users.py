@@ -55,7 +55,8 @@ async def test_e2e_login_and_create_user(client: AsyncClient, db_session: AsyncS
         hashed_password=get_password_hash(admin_password),
         first_name="Admin",
         last_name="E2E",
-        is_active=True
+        is_active=True,
+        is_superuser=True
     )
     db_session.add(admin_user)
     await db_session.flush() # flush to get IDs if needed
