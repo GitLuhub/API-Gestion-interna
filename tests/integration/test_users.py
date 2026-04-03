@@ -34,7 +34,7 @@ async def test_login_wrong_credentials(client: AsyncClient):
         json={"email": "wrong@example.com", "password": "wrongpassword"}
     )
     assert response.status_code == 401
-    assert "detail" in response.json()
+    assert "message" in response.json()
 
 @pytest.mark.asyncio
 async def test_e2e_login_and_create_user(client: AsyncClient, db_session: AsyncSession):
@@ -91,7 +91,7 @@ async def test_e2e_login_and_create_user(client: AsyncClient, db_session: AsyncS
     )
     
     assert create_response.status_code == 201, f"Create user failed: {create_response.text}"
-    created_user = create_response.json()
+    created_user = create_response.json()["data"]
     
     # 4. Verify the created user's data
     assert created_user["email"] == "new_e2e_user@example.com"

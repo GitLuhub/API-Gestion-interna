@@ -1,5 +1,6 @@
 import pytest
 import asyncio
+import os
 from typing import AsyncGenerator
 from httpx import AsyncClient, ASGITransport
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
@@ -8,12 +9,11 @@ from app.main import app
 from app.core.database import get_db_session
 from app.models.base import Base
 
-# Test database URL (SQLite memory)
-TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
+# Test database URL (PostgreSQL real para soportar UUID, JSON y asyncpg adecuadamente)
+TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5433/api_gestion_interna_test")
 
 engine = create_async_engine(
     TEST_DATABASE_URL,
-    connect_args={"check_same_thread": False},
     poolclass=None
 )
 TestingSessionLocal = async_sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=AsyncSession)
@@ -43,10 +43,11 @@ async def db_session(setup_database) -> AsyncGenerator[AsyncSession, None]:
         await session.rollback() # Ensure isolation between tests
 
 @pytest.fixture
-async def client(db_session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
-    """Provide an HTTP test client that uses the overridden db session."""
+async def client(setup_database) -> AsyncGenerator[AsyncClient, None]:
+    """Provide an HTTP test client."""
     async def override_get_db_session():
-        yield db_session
+        async with TestingSessionLocal() as session:
+            yield session
 
     app.dependency_overrides[get_db_session] = override_get_db_session
     

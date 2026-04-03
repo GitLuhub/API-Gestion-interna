@@ -147,7 +147,7 @@ async def health_check(request: Request, db: AsyncSession = Depends(get_db_sessi
         ).model_dump()
     )
 
-# TODO: Include API Routers
+# Include API Routers
 from app.api.v1.auth import router as auth_router
 from app.api.v1.users import router as users_router
 from app.api.v1.roles import router as roles_router

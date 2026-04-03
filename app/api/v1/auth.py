@@ -20,11 +20,11 @@ async def login(
     login_data: LoginRequest,
     user_repo: UserRepository = Depends(get_user_repository)
 ):
-    user = await user_repo.get_by_email(login_data.email)
+    user = await user_repo.get_by_email_with_roles(login_data.email)
     if not user or not verify_password(login_data.password, user.hashed_password):
         raise UnauthorizedException("Email o contraseña incorrectos")
 
-    roles = [r.name for r in await user_repo.db_session.run_sync(lambda session: user.roles)] if hasattr(user, 'roles') else []
+    roles = [r.name for r in user.roles] if hasattr(user, 'roles') else []
     
     access_token = create_access_token({"sub": str(user.id), "roles": roles})
     refresh_token = create_refresh_token({"sub": str(user.id)})
@@ -39,7 +39,7 @@ async def login(
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60
     )
 
-    return {"access_token": access_token, "token_type": "bearer", "refresh_token": refresh_token}
+    return {"access_token": access_token, "token_type": "bearer"}
 
 @router.post("/refresh", response_model=Token)
 async def refresh_token(

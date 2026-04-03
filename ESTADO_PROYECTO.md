@@ -300,7 +300,7 @@
 
 ### CI/CD
 
-- [ ] Configurar **integración continua** que ejecute tests en cada push (GitHub Actions, GitLab CI)
+- [x] Configurar **integración continua** que ejecute tests en cada push (GitHub Actions, GitLab CI)
 - [ ] La pipeline debe fallar si los tests fallan o la cobertura cae por debajo del umbral
 - [ ] Automatizar el **build y push de imágenes Docker** en la pipeline
 - [ ] Implementar **despliegue continuo** a staging automáticamente tras merge a main
@@ -351,10 +351,10 @@
 
 ### README
 
-- [ ] El README debe responder en 30 segundos: **qué hace**, **por qué existe**, **cómo arrancarlo**
-- [ ] Incluir instrucciones de instalación que **realmente funcionen** (probarlas en una máquina limpia)
-- [ ] Documentar todas las variables de entorno requeridas
-- [ ] Incluir instrucciones para ejecutar los tests
+- [x] El README debe responder en 30 segundos: **qué hace**, **por qué existe**, **cómo arrancarlo**
+- [x] Incluir instrucciones de instalación que **realmente funcionen** (probarlas en una máquina limpia)
+- [x] Documentar todas las variables de entorno requeridas
+- [x] Incluir instrucciones para ejecutar los tests
 
 ---
 
