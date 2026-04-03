@@ -38,6 +38,7 @@ htmlcov/
 
 # Documentos del proyecto no publicables
 ESTADO_PROYECTO.md
+pasos_para_levantar_y_probar_backend.md
 docs/
 
 # Frontend 
