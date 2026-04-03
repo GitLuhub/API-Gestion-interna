@@ -7,7 +7,7 @@
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-API empresarial robusta, escalable y segura diseñada para ser el "backbone" de aplicaciones internas. Resuelve la descentralización de datos e implementa un sólido control de acceso basado en roles (RBAC).
+API de Gestión Interna lista para producción. Desarrollada en Python 3.9+ usando FastAPI y SQLAlchemy 2.0 (async). Destaca por su arquitectura limpia por capas, seguridad avanzada (HttpOnly cookies, Rate Limiting), migraciones con Alembic y despliegue dockerizado.
 
 ---
 
